@@ -22,9 +22,16 @@ when presenting numbered results and interpreting whole-batch, partial, or
 single-image decisions. Preserve the user's exact adjustment words as the reason
 for a rewrite.
 
-1Step 1. **Look at the results yourself before scoring them.** Read the generated
-   images and compare them with what the plan asked for. This is the part Codex
-   is genuinely needed for: judging whether a picture matches the intent.
+1Step 1. **Look at the results yourself before scoring them, from an independent
+   context.** Read the generated images and compare them with what the plan asked
+   for. This is the part Codex is genuinely needed for: judging whether a picture
+   matches the intent. Keep the scoring context independent of the context that
+   wrote the prompts: hand the dimensioned critique to the **`image-factory-review`**
+   skill when it is available (it ships inside the image-factory plugin), and when
+   it is not, run the review in a fresh session that receives only the artifacts,
+   the plan's declared requirements, and the previous round's critique. A context
+   that scores the prompts it wrote converges on what the scorer likes rather than
+   on what the user asked for.
 
 2Step 2. **Run the deterministic gates.**
 
@@ -50,8 +57,28 @@ for a rewrite.
    ```
 
    The advisory file maps an item id to `[score, reason]` with the score between
-   0 and 1. Write a concrete reason: "the key light comes from the wrong side"
-   is useful to a rewrite; "not great" is not.
+   0 and 1, and also accepts an object form that carries named dimensions:
+
+   ```json
+   {
+     "item-01": {
+       "score": 0.72,
+       "reason": "close to the declared layout",
+       "dimensions": [
+         {"name": "composition", "score": 0.9, "evidence": "margins match the declared 15 percent"},
+         {"name": "materials", "score": 0.5, "evidence": "the mark reads amber, not the declared deep emerald"}
+       ]
+     }
+   }
+   ```
+
+   Write a concrete reason: "the key light comes from the wrong side"
+   is useful to a rewrite; "not great" is not. Each dimension carries a bounded
+   score and a gap statement that names observable evidence; a statement that
+   names no observable evidence is recorded as incomplete and never counts as
+   a gap. Compare against the previous round's critique for consistency, but
+   never match or raise a previous total when the images got worse: a drop is
+   kept and reported as a regression.
 
    Be explicit with the user that a model-produced score is recorded as a
    signal, not as a verdict. It is compared against `pass_threshold` only to
@@ -140,6 +167,8 @@ never write a prompt whose intent depends on those settings.
 ## Gotchas
 
 - A perfect advisory score does not survive a human rejection. If you recorded a rejection, the batch fails.
+- Do not raise an advisory total to keep continuity with a previous round when
+  the images got worse. The anti-ratchet rule is what keeps a regression visible.
 - Recording no advisory score at all is legitimate. A made-up number is worse than an empty one, because it looks like evidence.
 - Do not rewrite a prompt for an item you never looked at. Open the image first.
 - A low advisory score asks for a human; it does not fail the batch. Do not describe `pending_approval` to the user as a failure.

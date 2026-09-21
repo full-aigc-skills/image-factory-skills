@@ -26,13 +26,13 @@ npx skills add full-aigc-skills/image-factory-skills
 <!-- FULL_STACK_DOC_START -->
 ## 项目定位与边界
 
-`image-factory-skills` 是包含 **4 个可独立安装 Agent Skill** 的源代码仓库，当前清单版本为 `1.0.1`。本仓负责技能的触发说明、工作流、references、examples 与质量门禁；宿主插件的 Hook、MCP、凭据注入和运行时脚本不属于本仓职责。
+`image-factory-skills` 是包含 **4 个可独立安装 Agent Skill** 的源代码仓库，当前清单版本为 `1.0.2`。本仓负责技能的触发说明、工作流、references、examples 与质量门禁；宿主插件的 Hook、MCP、凭据注入和运行时脚本不属于本仓职责。
 
 | 已确认事实 | 值 | 证据 |
 |---|---|---|
 | 安装包 | `full-aigc-skills/image-factory-skills` | `.claude-plugin/plugin.json`、仓库远端 |
 | 可安装技能 | 4 | `skills/*/SKILL.md` |
-| 当前版本 | `1.0.1` | `.claude-plugin/plugin.json` |
+| 当前版本 | `1.0.2` | `.claude-plugin/plugin.json` |
 | 规格事实源 | OpenSpec | `openspec/config.yaml` |
 | 许可证 | Apache-2.0 | `LICENSE` |
 

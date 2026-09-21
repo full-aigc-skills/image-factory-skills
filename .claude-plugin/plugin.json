@@ -1,6 +1,6 @@
 {
   "name": "image-factory-skills",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Image Factory AIGC skills — batch image production workflow with quality judgement, recovery, and run orchestration.",
   "author": {
     "name": "AIGC Skills Community"
