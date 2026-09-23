@@ -95,6 +95,10 @@ python3 scripts/verify_sourced_snapshots.py
 
 安全边界：不得提交真实密钥、账号、本机绝对路径或私有仓库地址；脚本应默认最小权限，付费、上传、删除和覆盖动作必须保留显式授权门。
 
+### Release 通知凭据
+
+GitHub Release 发布后，`.github/workflows/notify-consumers.yml` 使用源仓 Actions Secret `SKILLS_SYNC_TOKEN` 向 `full-aigc-plugins/image-factory-plugin` 发送不可变 tag 与 peeled commit SHA。该 token 必须覆盖目标插件仓，并具备目标仓 `Contents: write` 权限；仓库不再识别 `FULL_AIGC_SKILLS_SYNC_TOKEN`。Secret 只通过 GitHub Actions 注入，禁止写入文件、命令输出或日志。
+
 ## 故障排查
 
 | 现象 | 检查 | 处理 |
@@ -104,6 +108,7 @@ python3 scripts/verify_sourced_snapshots.py
 | 插件完整性检查失败 | tag、peeled SHA、摘要和本地技能清单 | 在源技能仓发布新版本，再由同步 PR 更新插件 |
 | 工具或凭据缺失 | `compatibility`、运行时前置条件 | 报告 `UNVERIFIED`，不要猜测成功 |
 | 自动化第二次运行仍产生差异 | 生成器非幂等或清单漂移 | 阻止发布并修复生成/排序规则 |
+| Release dispatch 返回 403 | `SKILLS_SYNC_TOKEN` 的目标仓范围、`Contents: write`、组织审批或有效期 | 修正 token 后覆盖同名 Actions Secret，并重跑失败 job |
 <!-- FULL_STACK_DOC_END -->
 
 ## 📄 License
