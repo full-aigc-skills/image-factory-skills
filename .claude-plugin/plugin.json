@@ -1,7 +1,7 @@
 {
   "name": "image-factory-skills",
-  "version": "1.0.2",
-  "description": "Image Factory AIGC skills — batch image production workflow with quality judgement, recovery, and run orchestration.",
+  "version": "1.1.0",
+  "description": "Image Factory AIGC skills — Codex-native image generation plus governed batch production, quality judgement, recovery, and run orchestration.",
   "author": {
     "name": "AIGC Skills Community"
   },
@@ -9,6 +9,7 @@
   "repository": "https://github.com/full-aigc-skills/image-factory-skills",
   "source": "./",
   "skills": [
+    "./skills/imagegen",
     "./skills/image-factory-use",
     "./skills/image-factory-run",
     "./skills/image-factory-judge",

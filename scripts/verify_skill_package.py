@@ -24,7 +24,7 @@ def parse_frontmatter(text: str) -> dict[str, str]:
     for line in text[4:end].splitlines():
         if line and not line.startswith((" ", "-")) and ":" in line:
             key, value = line.split(":", 1)
-            result[key.strip()] = value.strip()
+            result[key.strip()] = value.strip().strip("'\"")
     return result
 
 

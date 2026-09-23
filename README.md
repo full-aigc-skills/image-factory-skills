@@ -2,7 +2,7 @@
 
 **Image Factory AIGC 技能** — 批量图片生产工作流：质量评判 / 恢复 / 运行编排。
 
-本包包含 **4 个技能**。
+本包包含 **5 个技能**。
 
 ## 📦 安装
 
@@ -10,10 +10,11 @@
 npx skills add full-aigc-skills/image-factory-skills
 ```
 
-## 🎯 技能列表 (4)
+## 🎯 技能列表 (5)
 
 | 技能 | 描述 |
 |------|------|
+| `imagegen` | Codex 内置 `image_gen` 优先的生图与编辑技能完整快照 |
 | `image-factory-use` | 路由器：分发图片生产请求到最窄适用 Skill |
 | `image-factory-run` | 按已验证计划执行生产、配额、记录、产出 |
 | `image-factory-judge` | 质量评判 + 优化循环 |
@@ -26,13 +27,13 @@ npx skills add full-aigc-skills/image-factory-skills
 <!-- FULL_STACK_DOC_START -->
 ## 项目定位与边界
 
-`image-factory-skills` 是包含 **4 个可独立安装 Agent Skill** 的源代码仓库，当前清单版本为 `1.0.2`。本仓负责技能的触发说明、工作流、references、examples 与质量门禁；宿主插件的 Hook、MCP、凭据注入和运行时脚本不属于本仓职责。
+`image-factory-skills` 是包含 **5 个可独立安装 Agent Skill** 的源代码仓库，当前清单版本为 `1.1.0`。本仓负责技能的触发说明、工作流、references、examples 与质量门禁；宿主插件的 Hook、MCP、凭据注入和运行时脚本不属于本仓职责。
 
 | 已确认事实 | 值 | 证据 |
 |---|---|---|
 | 安装包 | `full-aigc-skills/image-factory-skills` | `.claude-plugin/plugin.json`、仓库远端 |
-| 可安装技能 | 4 | `skills/*/SKILL.md` |
-| 当前版本 | `1.0.2` | `.claude-plugin/plugin.json` |
+| 可安装技能 | 5 | `skills/*/SKILL.md` |
+| 当前版本 | `1.1.0` | `.claude-plugin/plugin.json` |
 | 规格事实源 | OpenSpec | `openspec/config.yaml` |
 | 许可证 | Apache-2.0 | `LICENSE` |
 
@@ -87,6 +88,7 @@ image-factory-skills/
 
 ```bash
 python3 scripts/lint_skills.py
+python3 scripts/verify_sourced_snapshots.py
 ```
 
 发布前还必须检查 frontmatter、相对链接、资源完整性、TRACE 阈值、版本清单以及干净环境安装。正式 tag 不得移动；内容变化应发布新版本，并让消费插件通过 tag、peeled SHA 和摘要更新锁文件。
