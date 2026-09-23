@@ -12,7 +12,7 @@
 
 ## 3. Publication
 
-- [ ] 3.1 Validate and archive the OpenSpec change
-- [ ] 3.2 Commit and push the skill package, then confirm CI
-- [ ] 3.3 Create a new immutable tag and GitHub Release
-- [ ] 3.4 Confirm consumer dispatch or record the exact secret-visibility blocker
+- [x] 3.1 Validate and archive the OpenSpec change
+- [x] 3.2 Commit and push the skill package, then confirm CI
+- [x] 3.3 Create a new immutable tag and GitHub Release
+- [x] 3.4 Confirm consumer dispatch or record the exact secret-visibility blocker

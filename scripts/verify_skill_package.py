@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path.cwd()
 SKILLS = ROOT / "skills"
+DISPATCH_WORKFLOW = ROOT / ".github" / "workflows" / "notify-consumers.yml"
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 
@@ -88,6 +89,15 @@ def main() -> int:
             target = skill_dir / relative
             if target.suffix.lower() in {".md", ".py", ".sh", ".json", ".yaml", ".yml"} and not target.exists():
                 errors.append(f"{skill_dir.name}: referenced resource does not exist: {relative}")
+
+    if not DISPATCH_WORKFLOW.is_file():
+        errors.append("release dispatch workflow is missing")
+    else:
+        workflow = DISPATCH_WORKFLOW.read_text(encoding="utf-8")
+        if "secrets.SKILLS_SYNC_TOKEN" not in workflow:
+            errors.append("release dispatch workflow must use SKILLS_SYNC_TOKEN")
+        if "FULL_AIGC_SKILLS_SYNC_TOKEN" in workflow:
+            errors.append("release dispatch workflow still references retired FULL_AIGC_SKILLS_SYNC_TOKEN")
 
     for error in errors:
         print(f"ERROR: {error}")
